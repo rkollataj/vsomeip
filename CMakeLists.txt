@@ -179,6 +179,7 @@ endif()
 
 add_library(vsomeip SHARED ${vsomeip_SRC} ${vsomeip_e2e_SRC})
 set_target_properties (vsomeip PROPERTIES VERSION ${VSOMEIP_VERSION} SOVERSION ${VSOMEIP_MAJOR_VERSION})
+target_include_directories(vsomeip PUBLIC interface)
 # PRIVATE means the listed libraries won't be included in the "link interface",
 # meaning the exported vsomeipTargets.cmake targets won't try to link against
 # them (which shouldn't be required). ${Boost_LIBRARIES} includes absolute
@@ -251,36 +252,36 @@ set(INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/interface/vsomeip")
 file (GLOB_RECURSE vsomeip_INCLUDE RELATIVE ${INCLUDE_PATH} "interface/*.hpp"  )
 list (SORT vsomeip_INCLUDE)
 
-foreach ( file ${vsomeip_INCLUDE} )
-    get_filename_component( dir ${file} DIRECTORY )
-    install( FILES "${INCLUDE_PATH}/${file}" DESTINATION "${INSTALL_INCLUDE_DIR}/vsomeip/${dir}" COMPONENT dev)
-endforeach()
+#foreach ( file ${vsomeip_INCLUDE} )
+    #get_filename_component( dir ${file} DIRECTORY )
+    #install( FILES "${INCLUDE_PATH}/${file}" DESTINATION "${INSTALL_INCLUDE_DIR}/vsomeip/${dir}" COMPONENT dev)
+#endforeach()
 
-install (
-    TARGETS vsomeip 
-    # IMPORTANT: Add the vsomeip library to the "export-set"
-    EXPORT vsomeipTargets
-    RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT
-    LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT
-    ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
-    COMPONENT dev
-)
+#install (
+    #TARGETS vsomeip 
+    ## IMPORTANT: Add the vsomeip library to the "export-set"
+    #EXPORT vsomeipTargets
+    #RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT
+    #LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT
+    #ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+    #COMPONENT dev
+#)
 
-install (
-    TARGETS vsomeip-cfg
-    LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
-    RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
-)
+#install (
+    #TARGETS vsomeip-cfg
+    #LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
+    #RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
+#)
 
-install (
-    TARGETS vsomeip-sd
-    LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
-    RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
-)
+#install (
+    #TARGETS vsomeip-sd
+    #LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
+    #RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
+#)
 
-install (
-  FILES ${EXAMPLE_CONFIG_FILES} DESTINATION etc/vsomeip COMPONENT config
-)
+#install (
+  #FILES ${EXAMPLE_CONFIG_FILES} DESTINATION etc/vsomeip COMPONENT config
+#)
 
 # Add all targets to the build-tree export set
 export (TARGETS vsomeip FILE "${PROJECT_BINARY_DIR}/vsomeipTargets.cmake")
@@ -310,20 +311,20 @@ configure_file (
 )
 
 # Install the vsomeipConfig.cmake and vsomeipConfigVersion.cmake
-install (
-    FILES
-    "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/vsomeipConfig.cmake"
-    "${PROJECT_BINARY_DIR}/vsomeipConfigVersion.cmake"
-    DESTINATION "${INSTALL_CMAKE_DIR}"
-    COMPONENT dev
-)
+#install (
+    #FILES
+    #"${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/vsomeipConfig.cmake"
+    #"${PROJECT_BINARY_DIR}/vsomeipConfigVersion.cmake"
+    #DESTINATION "${INSTALL_CMAKE_DIR}"
+    #COMPONENT dev
+#)
 
 # Install the export set for use with the install-tree
-install (
-    EXPORT vsomeipTargets
-    DESTINATION "${INSTALL_CMAKE_DIR}"
-    COMPONENT dev
-)
+#install (
+    #EXPORT vsomeipTargets
+    #DESTINATION "${INSTALL_CMAKE_DIR}"
+    #COMPONENT dev
+#)
 
 ##############################################################################
 # build documentation
@@ -388,10 +389,10 @@ endif()
 
 ##############################################################################
 # create pkg-config file
-if(NOT WIN32)
-        configure_file(vsomeip.pc.in ${PROJECT_BINARY_DIR}/vsomeip.pc @ONLY)
-        install(FILES ${PROJECT_BINARY_DIR}/vsomeip.pc DESTINATION lib/pkgconfig)
-endif()
+#if(NOT WIN32)
+        #configure_file(vsomeip.pc.in ${PROJECT_BINARY_DIR}/vsomeip.pc @ONLY)
+        #install(FILES ${PROJECT_BINARY_DIR}/vsomeip.pc DESTINATION lib/pkgconfig)
+#endif()
 
 ##############################################################################
 # build daemon (Non-Windows only)
