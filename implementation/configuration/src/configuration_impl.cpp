@@ -157,7 +157,7 @@ configuration_impl::configuration_impl(const configuration_impl &_other)
 configuration_impl::~configuration_impl() {
 }
 
-bool configuration_impl::load(const std::string &_name) {
+bool configuration_impl::load(const std::string &_name, const std::string &config) {
     std::lock_guard<std::mutex> its_lock(mutex_);
     if (is_loaded_)
         return true;
@@ -178,7 +178,14 @@ bool configuration_impl::load(const std::string &_name) {
     }
 
     // Override with path from environment (if existing)
-    const char *its_env = getenv(VSOMEIP_ENV_CONFIGURATION);
+    const char *its_env;
+    
+    if (config.length() > 0) {
+        its_env = config.c_str();
+    } else {
+        its_env = getenv(VSOMEIP_ENV_CONFIGURATION);
+    }
+
     if (nullptr != its_env) {
         if (utility::is_file(its_env)) {
             its_file = its_env;

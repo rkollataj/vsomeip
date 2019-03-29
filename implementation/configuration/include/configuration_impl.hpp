@@ -52,7 +52,7 @@ public:
     VSOMEIP_EXPORT configuration_impl(const configuration_impl &_cfg);
     VSOMEIP_EXPORT virtual ~configuration_impl();
 
-    VSOMEIP_EXPORT bool load(const std::string &_name);
+    VSOMEIP_EXPORT bool load(const std::string &_name, const std::string &config="");
 
     VSOMEIP_EXPORT const std::string &get_network() const;
 

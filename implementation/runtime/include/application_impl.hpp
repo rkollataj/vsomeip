@@ -42,7 +42,7 @@ public:
 
     VSOMEIP_EXPORT void set_configuration(const std::shared_ptr<configuration> _configuration);
 
-    VSOMEIP_EXPORT bool init();
+    VSOMEIP_EXPORT bool init(const std::string& appName="", const std::string& config="");
     VSOMEIP_EXPORT void start();
     VSOMEIP_EXPORT void stop();
 

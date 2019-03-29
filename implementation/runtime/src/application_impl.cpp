@@ -71,14 +71,19 @@ void application_impl::set_configuration(
     // Dummy.
 }
 
-bool application_impl::init() {
+bool application_impl::init(const std::string& appName, const std::string& config) {
     if(is_initialized_) {
         VSOMEIP_WARNING << "Trying to initialize an already initialized application.";
         return true;
     }
     // Application name
     if (name_ == "") {
-        const char *its_name = getenv(VSOMEIP_ENV_APPLICATION_NAME);
+        const char *its_name;
+        if(appName.length() > 0) {
+            its_name = appName.c_str();
+        } else {
+            its_name = getenv(VSOMEIP_ENV_APPLICATION_NAME);
+        }
         if (nullptr != its_name) {
             name_ = its_name;
         }
@@ -99,7 +104,7 @@ bool application_impl::init() {
             if (configuration_path.length()) {
                 configuration_->set_configuration_path(configuration_path);
             }
-            configuration_->load(name_);
+            configuration_->load(name_, config);
             VSOMEIP_INFO << "Default configuration module loaded.";
         } else {
             std::cerr << "Service Discovery module could not be loaded!" << std::endl;

@@ -37,7 +37,7 @@ class configuration {
 public:
     virtual ~configuration() {}
 
-    virtual bool load(const std::string &_name) = 0;
+    virtual bool load(const std::string &_name, const std::string &config="") = 0;
 
     virtual const std::string &get_network() const = 0;
 

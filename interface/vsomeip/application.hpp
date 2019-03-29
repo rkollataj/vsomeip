@@ -103,7 +103,7 @@ public:
      * - Installing signal handlers
      *
      */
-    virtual bool init() = 0;
+    virtual bool init(const std::string &appName="", const std::string &config="") = 0;
 
     /**
      *
